@@ -67,4 +67,4 @@ def iplook():
 		return render_template("number.html", data=data, title = 'Phone Number Lookup')
 
 if __name__ == '__main__':
-	app.run(debug=True, host='192.168.1.103')
+	app.run()
