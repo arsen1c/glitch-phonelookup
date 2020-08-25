@@ -1,22 +1,8 @@
 from flask import Flask, render_template, request
 import json 
-# ^ to load JSON data to a python dict
-# urllib.request to make a request to api
 import urllib.request
 
 app = Flask(__name__)
-
-# {
-#   "valid":true,
-#   "number":"917350727180",
-#   "local_format":"07350727180",
-#   "international_format":"+917350727180",
-#   "country_prefix":"+91",
-#   "country_code":"IN",
-#   "country_name":"India (Republic of)",
-#   "location":"Maharashtra",
-#   "carrier":"Vodafone Idea Ltd (formerly Idea Cellular Ltd)",
-#   "line_type":"mobile"
 
 @app.route('/phone', methods = ['POST', 'GET'])
 def iplook():
@@ -27,7 +13,7 @@ def iplook():
 		country_code = numberDetails['country_code']
 
 
-		api_key = '3fedf78f9ee3242fcbc1032d36a1c3be'
+		api_key = 'API_KEY'
 		source = urllib.request.urlopen(f'http://apilayer.net/api/validate?access_key={api_key}&number={phone_num}&country_code={country_code.upper()}&format=1')
 		# converting JSON data to a DICT
 		list_of_data = json.load(source)
@@ -45,11 +31,9 @@ def iplook():
 			"country_prefix": list_of_data["country_prefix"],
 			"international_format": list_of_data["international_format"]
 		}
-	# print(data)
 		if data['valid'] != "true":
 			error = "Invalid Phone Number. Please try again."
 		else:
-			# return render_template('number.html', data=data, title='Phone Number Lookup')
 			return render_template('number.html', data=data, error=error)
 	else:
 		data = {
